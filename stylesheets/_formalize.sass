@@ -8,26 +8,60 @@
 @import compass/css3/box-sizing
 @import compass/css3/gradient
 
-// `Widths
+// `Variables
 //----------------------------------------------------------------------------------------------------
 
-.input_tiny
-  width: 50px
+$formalize-focus-shadow-color: #06f !default
+$formalize-disabled-color: #888 !default
+$formalize-placeholder-color: #888 !default
 
-.input_small
-  width: 100px
+// Helvetica Neue present, because it works better
+// for line-height on buttons than Arial, on OS X.
+$formalize-button-font-family: 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif !default
+$formalize-button-font-color: #333 !default
+$formalize-button-font-size: 12px/1.3 !default
+$formalize-button-font-weight: bold !default
+$formalize-button-border: 1px solid !default
+$formalize-button-border-radius: 4px !default
+$formalize-button-border-color: #ddd #bbb #999 !default
+$formalize-button-border-color-active: #999 #bbb #ddd !default
 
-.input_medium
-  width: 150px
+// Leaving out Helvetica Neue, to not throw off size="..."
+// on inputs. Arial is more reliable, on Windows and OS X.
+$formalize-input-font-family: Arial, 'Liberation Sans', FreeSans, sans-serif !default
+$formalize-input-font-color: #000 !default
+$formalize-input-font-size: 13px !default
+// todo: ie7
+$formalize-input-padding: 2px 3px !default
+$formalize-input-background: #fff !default
+$formalize-input-background-disabled: #eee !default
+$formalize-input-border: 1px solid !default
+$formalize-input-border-color: #848484 #c1c1c1 #e1e1e1 !default
+$formalize-input-height: 1.8em !default
 
-.input_large
-  width: 200px
+$formalize-enable-size-presets: true !default
+$formalize-enable-ie6-support: true !default
 
-.input_xlarge
-  width: 250px
+// `Widths
+//----------------------------------------------------------------------------------------------------
+@if $formalize-enable-size-presets
+  .input_tiny
+    width: 50px
 
-.input_xxlarge
-  width: 300px
+  .input_small
+    width: 100px
+
+  .input_medium
+    width: 150px
+
+  .input_large
+    width: 200px
+
+  .input_xlarge
+    width: 250px
+
+  .input_xxlarge
+    width: 300px
 
 .input_full
   width: 100%
@@ -91,7 +125,7 @@ button:focus,
 input:focus,
 select:focus,
 textarea:focus,
-  +box-shadow(#06f 0 0 7px 0)
+  +box-shadow($formalize-focus-shadow-color 0 0 7px 0)
   // for Opera
   z-index: 1
 
@@ -107,20 +141,20 @@ input[type="reset"],
 input[type="submit"],
 input[type="button"]
   -webkit-appearance: none
-  +border-radius(4px)
+  +border-radius($formalize-button-border-radius)
   +background-clip(padding-box)
   background: #ddd image-url("button.png", false, false) repeat-x
   +background-image(linear-gradient(color-stops(#fff, #ddd)))
-  border: 1px solid
-  border-color: #ddd #bbb #999
+  border: $formalize-button-border
+  border-color: $formalize-button-border-color
   cursor: pointer
-  color: #333
+  color: $formalize-button-font-color
   // Helvetica Neue present, because it works better
   // for line-height on buttons than Arial, on OS X.
-  font: bold 12px/1.3 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif
+  font: $formalize-button-font-weight $formalize-button-font-size $formalize-button-font-family
   outline: 0
   overflow: visible
-  padding: 3px 10px
+  padding: $formalize-button-padding
   text-shadow: #fff 0 1px 1px
   width: auto
   &:hover
@@ -128,7 +162,7 @@ input[type="button"]
   &:active
     +background-image(linear-gradient(#fff, #ddd 1px, #eee))
     +box-shadow(inset rgba(#000, 0.25) 0 1px 2px 0)
-    border-color: #999 #bbb #ddd
+    border-color: $formalize-button-border-color-active
   // IE7
   *padding-top: 2px
   *padding-bottom: 0
@@ -157,24 +191,24 @@ input[type="week"]
   +background-clip(padding-box)
   +border-radius(0)
   -webkit-appearance: none
-  background-color: #fff
-  border: 1px solid
-  border-color: #848484 #c1c1c1 #e1e1e1
-  color: #000
+  background-color: $formalize-input-background
+  border: $formalize-input-border
+  border-color: $formalize-input-border-color
+  color: $formalize-input-font-color
   outline: 0
-  padding: 2px 3px
+  padding: $formalize-input-padding
   text-align: left
-  font-size: 13px
+  font-size: $formalize-input-font-size
   // Leaving out Helvetica Neue, to not throw off size="..."
   // on inputs. Arial is more reliable, on Windows and OS X.
-  font-family: Arial, 'Liberation Sans', FreeSans, sans-serif
-  height: 1.8em
+  font-family: $formalize-input-font-family
+  height: $formalize-input-height
   // IE7
   *padding-top: 2px
   *padding-bottom: 1px
   *height: auto
   &[disabled]
-    background-color: #eee
+    background-color: $formalize-input-background-disabled
 
 button[disabled],
 input[disabled],
@@ -187,22 +221,22 @@ textarea[disabled]
   -webkit-user-select: none
   -khtml-user-select: none
   user-select: none
-  color: #888
+  color: $formalize-disabled-color
   cursor: default
 
 // Separate rule for Firefox.
 // Separate rule for IE, too.
 // Cannot stack with WebKit's.
 ::-webkit-input-placeholder
-  color: #888
+  color: $formalize-placeholder-color
 
 input:-moz-placeholder,
 textarea:-moz-placeholder
-  color: #888
+  color: $formalize-placeholder-color
 
 input.placeholder_text,
 textarea.placeholder_text
-  color: #888
+  color: $formalize-placeholder-color
 
 \:invalid
   // Suppress red glow that Firefox
@@ -279,42 +313,42 @@ optgroup
 // input[type=submit] {
 //   This doesn't work.
 // }
+@if $formalize-enable-ie6-support
+  .ie6_button,
+  * html button
+    background: #ddd image-url("button.png", false, false) repeat-x
+    border: 1px solid
+    border-color: #ddd #bbb #999
+    cursor: pointer
+    color: #333
+    font: bold 12px/1.2 Arial, sans-serif
+    padding: 2px 10px 0px
+    overflow: visible
+    width: auto
 
-.ie6_button,
-* html button
-  background: #ddd image-url("button.png", false, false) repeat-x
-  border: 1px solid
-  border-color: #ddd #bbb #999
-  cursor: pointer
-  color: #333
-  font: bold 12px/1.2 Arial, sans-serif
-  padding: 2px 10px 0px
-  overflow: visible
-  width: auto
+  * html button
+    padding-top: 1px
+    padding-bottom: 1px
 
-* html button
-  padding-top: 1px
-  padding-bottom: 1px
+  .ie6_input,
+  * html textarea,
+  * html select
+    background: #fff
+    border: 1px solid
+    border-color: #848484 #c1c1c1 #e1e1e1
+    color: #000
+    padding: 2px 3px 1px
+    font-size: $formalize-input-font-size
+    font-family: Arial, sans-serif
+    vertical-align: top
 
-.ie6_input,
-* html textarea,
-* html select
-  background: #fff
-  border: 1px solid
-  border-color: #848484 #c1c1c1 #e1e1e1
-  color: #000
-  padding: 2px 3px 1px
-  font-size: 13px
-  font-family: Arial, sans-serif
-  vertical-align: top
+  * html select
+    margin-top: 1px
 
-* html select
-  margin-top: 1px
+  .placeholder_text,
+  .ie6_input_disabled,
+  .ie6_button_disabled
+    color: $formalize-placeholder-color
 
-.placeholder_text,
-.ie6_input_disabled,
-.ie6_button_disabled
-  color: #888
-
-.ie6_input_disabled
-  background: #eee
+  .ie6_input_disabled
+    background: #eee
