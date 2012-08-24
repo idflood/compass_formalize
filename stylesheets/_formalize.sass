@@ -26,6 +26,7 @@ $formalize-button-border-radius: 4px !default
 $formalize-button-border-color: #ddd #bbb #999 !default
 $formalize-button-border-color-active: #999 #bbb #ddd !default
 $formalize-button-padding: 3px 10px !default
+$formalize-button-hover-font-color: #111 !default
 
 // Leaving out Helvetica Neue, to not throw off size="..."
 // on inputs. Arial is more reliable, on Windows and OS X.
@@ -160,10 +161,12 @@ input[type="button"]
   width: auto
   &:hover
     +background-image(linear-gradient(#fff, #eee 1px, #ccc))
+    color: $formalize-button-hover-font-color
   &:active
     +background-image(linear-gradient(#fff, #ddd 1px, #eee))
     +box-shadow(inset rgba(#000, 0.25) 0 1px 2px 0)
     border-color: $formalize-button-border-color-active
+    color: $formalize-button-hover-font-color
   // IE7
   *padding-top: 2px
   *padding-bottom: 0
